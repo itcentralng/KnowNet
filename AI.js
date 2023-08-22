@@ -4,13 +4,13 @@ config();
 
 const ai = new OpenAI();
 
-async function chatBot() {
+async function chatBot(prompt) {
   const res = await ai.chat.completions.create({
     model: "gpt-3.5-turbo",
     messages: [
       {
         role: "user",
-        content: "hello",
+        content: prompt,
       },
     ],
     temperature: 0.4,
@@ -18,4 +18,4 @@ async function chatBot() {
   console.log(res.choices[0].message.content);
 }
 
-chatBot();
+export default chatBot;

@@ -1,10 +1,15 @@
 import express from "express";
+import cors from "cors";
+import { configDotenv } from "dotenv";
+import bodyParser from "body-parser";
 import AfricasTalking from "africastalking";
-import { config } from "dotenv";
+import chatBot from "./AI.js";
 
-config();
-
+configDotenv();
 const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 const africastalking = AfricasTalking({
   apiKey: process.env.AT_Api_Key,
@@ -20,7 +25,6 @@ async function sendSMS() {
       message: "Sup bro",
       from: "22881",
     });
-    console.log(result);
   } catch (ex) {
     console.error(ex);
   }
@@ -34,26 +38,17 @@ function smsServer() {
     res.send({ message: "hello world" });
   });
   // TODO: Incoming messages route
-  app.post("https://b94c-160-152-15-235.ngrok-free.app", (req, res) => {
-    const data = req.body;
-    console.log(`Received message: \n ${data}`);
-    res.sendStatus(200);
+  app.post("/incoming-messages", async (req, res) => {
+    console.log(req.body);
+    chatBot(req.body.prompt);
+    res.send({ msg: "abc" });
   });
 
-  // TODO: Delivery reports route
-  app.post("/delivery-reports", (req, res) => {
-    const data = req.body;
-    console.log(`Received report: \n ${data}`);
-    res.sendStatus(200);
-  });
-
-  const port = 3000;
-
-  app.listen(port, () => {
-    console.log(`App running on port: ${port}`);
-
+  const port = 3555;
+  app.listen(port, function () {
+    console.log(`Web server listening on port ${port}`);
     // TODO: call sendSMS to send message after server starts
-    sendSMS();
+    // sendSMS();
   });
 }
 
