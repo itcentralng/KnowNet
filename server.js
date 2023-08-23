@@ -16,13 +16,13 @@ const africastalking = AfricasTalking({
   username: "sandbox",
 });
 
-async function sendSMS() {
+async function sendSMS(response) {
   // TODO: Send message
 
   try {
     const result = await africastalking.SMS.send({
       to: "+2348159595959",
-      message: "Sup bro",
+      message: `${response}`,
       from: "22881",
     });
   } catch (ex) {
@@ -39,9 +39,22 @@ function smsServer() {
   });
   // TODO: Incoming messages route
   app.post("/incoming-messages", async (req, res) => {
-    console.log(req.body);
-    chatBot(req.body.prompt);
-    res.send({ msg: "abc" });
+    console.log(req.body.text);
+    try {
+      let advert = `
+      
+      Ad:
+      ________________________
+      This is a sample ad.
+      `;
+      let reply = await chatBot(req.body.text + "\n");
+      //   reply += advert;
+      sendSMS(`${reply} \n  ${advert}`);
+      res.end();
+    } catch (error) {
+      console.log(error);
+      res.end();
+    }
   });
 
   const port = 3555;

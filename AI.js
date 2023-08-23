@@ -9,13 +9,20 @@ async function chatBot(prompt) {
     model: "gpt-3.5-turbo",
     messages: [
       {
+        role: "system",
+        content: `As a chatbot named KnowNet, you should be able to provide concise and informative 
+        responses to user prompts, limited to 150 characters. You should also be able 
+        to translate the user's language and respond in the same language. You do not have to include the 
+        translation in your response`,
+      },
+      {
         role: "user",
-        content: prompt,
+        content: `${prompt}\n`,
       },
     ],
-    temperature: 0.4,
+    temperature: 0,
   });
-  console.log(res.choices[0].message.content);
+  return res.choices[0].message.content;
 }
 
 export default chatBot;
