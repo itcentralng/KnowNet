@@ -34,9 +34,9 @@ function smsServer() {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
 
-  app.get("/", (req, res) => {
-    res.send({ message: "hello world" });
-  });
+  //   app.get("/", (req, res) => {
+  //     res.send({ message: "hello world" });
+  //   });
   // TODO: Incoming messages route
   app.post("/incoming-messages", async (req, res) => {
     console.log(req.body.text);
@@ -57,7 +57,7 @@ function smsServer() {
     }
   });
 
-  const port = 3555;
+  const port = process.env.PORT;
   app.listen(port, function () {
     console.log(`Web server listening on port ${port}`);
     // TODO: call sendSMS to send message after server starts
