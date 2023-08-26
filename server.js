@@ -49,7 +49,7 @@ function smsServer() {
       `;
       let reply = await chatBot(req.body.text + "\n");
       //   reply += advert;
-      sendSMS(`${reply} \n  ${advert}`);
+      sendSMS(`${reply}  ${advert}`);
       res.end();
     } catch (error) {
       console.log(error);
