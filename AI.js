@@ -26,3 +26,5 @@ async function chatBot(prompt) {
 }
 
 export default chatBot;
+
+//configuration of the chatbot

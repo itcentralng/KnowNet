@@ -4,7 +4,6 @@ config();
 // Set your app credentials
 
 // Initialize the SDK
-// const AfricasTalking = require("africastalking")(credentials);
 import AfricasTalking from "africastalking";
 
 const africastalking = AfricasTalking({
@@ -42,5 +41,3 @@ function getMessagesRecursively(lastReceivedId) {
 let lastReceivedId = 78615;
 
 getMessagesRecursively(lastReceivedId).then(console.log).catch(console.log);
-
-// NOTE: Be sure to save the lastReceivedId for next time
