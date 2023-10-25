@@ -35,15 +35,9 @@ function smsServer() {
   app.post("/incoming-messages", async (req, res) => {
     console.log(req.body.text);
     try {
-      let advert = `
-      
-      Ad:
-      ________________________
-      This is a sample ad.
-      `;
       let reply = await chatBot(req.body.text + "\n"); // calls the chatbot function
       //   reply += advert;
-      sendSMS(`${reply}  ${advert}`); // passes the chatbot response as a parameter to the sendSMS function
+      sendSMS(`${reply}`); // passes the chatbot response as a parameter to the sendSMS function
       res.end();
     } catch (error) {
       console.log(error);
